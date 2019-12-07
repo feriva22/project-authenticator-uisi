@@ -20,26 +20,6 @@ class Mahasiswa extends User
     private $nim;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $nama;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $jeniskelamin;
-
-    /**
-     * @ORM\Column(type="string", length=15)
-     */
-    private $nohp;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $alamat;
-
-    /**
      * @ORM\Column(type="string", length=45)
      */
     private $namawali;
@@ -67,54 +47,6 @@ class Mahasiswa extends User
     public function setNim(string $nim): self
     {
         $this->nim = $nim;
-
-        return $this;
-    }
-
-    public function getNama(): ?string
-    {
-        return $this->nama;
-    }
-
-    public function setNama(string $nama): self
-    {
-        $this->nama = $nama;
-
-        return $this;
-    }
-
-    public function getJeniskelamin(): ?int
-    {
-        return $this->jeniskelamin;
-    }
-
-    public function setJeniskelamin(int $jeniskelamin): self
-    {
-        $this->jeniskelamin = $jeniskelamin;
-
-        return $this;
-    }
-
-    public function getNohp(): ?string
-    {
-        return $this->nohp;
-    }
-
-    public function setNohp(string $nohp): self
-    {
-        $this->nohp = $nohp;
-
-        return $this;
-    }
-
-    public function getAlamat(): ?string
-    {
-        return $this->alamat;
-    }
-
-    public function setAlamat(string $alamat): self
-    {
-        $this->alamat = $alamat;
 
         return $this;
     }
