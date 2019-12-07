@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -17,18 +19,6 @@ class UnitOrganisasi
      * @ORM\Column(type="integer")
      */
     private $id;
-
-    /**
-     * @ORM\Column(type="integer")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $parent;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $user;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -46,22 +36,6 @@ class UnitOrganisasi
     private $kode;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $ketua;
-
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $jabatan;
-
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $kode_jabatan;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $masa_mulai;
@@ -71,33 +45,32 @@ class UnitOrganisasi
      */
     private $masa_akhir;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\UnitOrganisasi")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\AnggotaOrganisasi", mappedBy="unitOrganisasi")
+     */
+    private $anggota;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $ketua;
+
+    public function __construct()
+    {
+        $this->anggota = new ArrayCollection();
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getParent(): ?int
-    {
-        return $this->parent;
-    }
-
-    public function setParent(int $parent): self
-    {
-        $this->parent = $parent;
-
-        return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
     }
 
     public function getNama(): ?string
@@ -136,41 +109,7 @@ class UnitOrganisasi
         return $this;
     }
 
-    public function getKetua(): ?User
-    {
-        return $this->ketua;
-    }
 
-    public function setKetua(?User $ketua): self
-    {
-        $this->ketua = $ketua;
-
-        return $this;
-    }
-
-    public function getJabatan(): ?string
-    {
-        return $this->jabatan;
-    }
-
-    public function setJabatan(string $jabatan): self
-    {
-        $this->jabatan = $jabatan;
-
-        return $this;
-    }
-
-    public function getKodeJabatan(): ?string
-    {
-        return $this->kode_jabatan;
-    }
-
-    public function setKodeJabatan(string $kode_jabatan): self
-    {
-        $this->kode_jabatan = $kode_jabatan;
-
-        return $this;
-    }
 
     public function getMasaMulai(): ?\DateTimeInterface
     {
@@ -195,4 +134,60 @@ class UnitOrganisasi
 
         return $this;
     }
+
+    public function getParent(): ?self
+    {
+        return $this->parent;
+    }
+
+    public function setParent(?self $parent): self
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AnggotaOrganisasi[]
+     */
+    public function getAnggota(): Collection
+    {
+        return $this->anggota;
+    }
+
+    public function addAnggotum(AnggotaOrganisasi $anggotum): self
+    {
+        if (!$this->anggota->contains($anggotum)) {
+            $this->anggota[] = $anggotum;
+            $anggotum->setUnitOrganisasi($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnggotum(AnggotaOrganisasi $anggotum): self
+    {
+        if ($this->anggota->contains($anggotum)) {
+            $this->anggota->removeElement($anggotum);
+            // set the owning side to null (unless already changed)
+            if ($anggotum->getUnitOrganisasi() === $this) {
+                $anggotum->setUnitOrganisasi(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getKetua(): ?User
+    {
+        return $this->ketua;
+    }
+
+    public function setKetua(?User $ketua): self
+    {
+        $this->ketua = $ketua;
+
+        return $this;
+    }
+
 }
