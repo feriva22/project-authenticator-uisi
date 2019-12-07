@@ -5,18 +5,14 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
+use App\Entity\User;
+
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\DosenRepository")
  */
-class Dosen
+class Dosen extends User
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
 
     /**
      * @ORM\Column(type="string", length=20)
@@ -43,16 +39,6 @@ class Dosen
      */
     private $alamat;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $user;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getNidn(): ?string
     {
@@ -114,15 +100,4 @@ class Dosen
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
 }
