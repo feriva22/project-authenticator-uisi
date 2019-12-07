@@ -1,0 +1,26 @@
+<?php //property_name_collection_28a0531f1bf0cb72bbd42c49e12d0791
+
+namespace Symfony\Component\VarExporter\Internal;
+
+return $getExpiry ? PHP_INT_MAX : Hydrator::hydrate(
+    $o = [
+        clone (Registry::$prototypes['ApiPlatform\\Core\\Metadata\\Property\\PropertyNameCollection'] ?? Registry::p('ApiPlatform\\Core\\Metadata\\Property\\PropertyNameCollection')),
+    ],
+    null,
+    [
+        'ApiPlatform\\Core\\Metadata\\Property\\PropertyNameCollection' => [
+            'properties' => [
+                [
+                    'id',
+                    'tipe',
+                    'tipeStatus',
+                    'kodeJabatanOu',
+                    'user',
+                    'kodeJabatan',
+                ],
+            ],
+        ],
+    ],
+    $o[0],
+    []
+);

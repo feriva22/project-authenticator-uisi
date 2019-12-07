@@ -1,0 +1,3 @@
+<?php //route_name_dad896cafc282156b534a4bf7e062cbd
+
+return [PHP_INT_MAX, 'api_karyawans_get_item'];
